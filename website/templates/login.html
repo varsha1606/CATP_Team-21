@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="login-container"> <!-- Apply login-container class -->
+  <div class="login-box"> <!-- Create a login box to contain the form -->
+    <!-- Replace the text with the logo image -->
+    <img src="{{ url_for('static', filename='logo-transparent-png.png') }}" class="img-fluid mx-auto d-block" alt="Contextify Logo" style="width: 230px; height: auto; margin-bottom: 7px;"> <!-- Adjust width and margin -->
+
+    <h3 align="center" style="color: #ffffff;">Login</h3> <!-- White color -->
+    <form method="POST">
+      <div class="form-group" style="width: 100%;"> <!-- Set input width to 100% -->
+        <label for="email" style="color: #ffffff;">Email Address</label> <!-- White color -->
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter email"
+          style="width: 100%; background-color: #280e3d; color: #7d7777;"> <!-- Dark purple background and light grey text -->
+      </div>
+      <div class="form-group" style="width: 100%; margin-bottom: 10px;"> <!-- Set input width to 100% and reduce margin-bottom -->
+        <label for="password" style="color: #ffffff;">Password</label> <!-- White color -->
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Enter password"
+          style="width: 100%; background-color: #280e3d; color: #7d7777;"> <!-- Dark purple background and light grey text -->
+      </div>
+      <br />
+      <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #ffc3a0, #6a0572); border-color: #6a0572; width: 100%;">Login</button> <!-- Gradient background -->
+    </form>
+    <div align="center" style="margin-top: 10px;"> <!-- Adjust margin-top -->
+      <button class="btn btn-link" id="forgot-password" style="color: #ffffff;">Forgot Password?</button> <!-- White color -->
+    </div>
+  </div>
+</div>
+
+<div id="forgot-password-modal" class="modal">
+  <div class="modal-content" style="background-color: #280e3d; color: white;">
+    <span class="close" style="color: white;">&times;</span>
+    <h3 style="color: white;">Reset Password</h3>
+    <p>Please enter your email address to receive an OTP.</p>
+    <form id="otp-form">
+      <div class="form-group" style="width: 100%;"> <!-- Set input width to 100% -->
+        <label for="reset-email" style="color: white;">Email Address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="reset-email"
+          name="reset-email"
+          placeholder="Enter email"
+          style="width: 100%; background-color: #45294a; color: #7d7777;"> <!-- Dark purple background and light grey text -->
+      </div>
+      <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #ffc3a0, #6a0572); color: white; width: 100%;">Send OTP</button> <!-- Gradient background -->
+    </form>
+  </div>
+</div>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #180a33, #280e3d, #45294a); /* Gradient background */
+    color: #ffffff; /* White text color */
+  }
+
+  .login-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto;
+    margin-top: 50px; /* Adjust margin-top to move the login box up */
+    margin-bottom: 50px; /* Add margin-bottom to create space below the login box */
+    background: linear-gradient(135deg, #180a33, #280e3d, #45294a); /* Gradient background */
+  }
+  
+  .login-box {
+    margin: auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #180a33, #280e3d, #45294a); /* Gradient background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* White shadow for depth */
+  }
+
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 50%; /* Start from the middle of the page */
+    width: 80%; /* Full width */
+    height: 50%; /* Half of the height */
+    overflow: auto; /* Enable scroll if needed */
+  }
+
+  .modal-content {
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #280e3d; /* Dark purple color */
+    width: 80%;
+  }
+
+  .close {
+    color: white !important; /* Set close button color to white */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black !important; /* Set close button hover color to black */
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #280e3d; /* Dark purple background for input text box */
+    color: #7d7777; /* Light grey text color */
+  }
+
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder {
+    color: #888484; /* Light grey placeholder text color */
+  }
+
+  button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ffc3a0, #6a0572); /* Gradient background from baby pink to dark purple for buttons */
+    color: #ffffff; /* White text color for buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Transition gradient background */
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #ff8e85, #360940); /* Darker shade of pinkish-purple gradient on hover */
+  }
+
+  .btn-link {
+    color: #ffffff; /* White text color for link buttons */
+    margin-top: 20px; /* Add margin to the top of the "Forgot Password?" button */
+  }
+
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<script>
+  // Get the modal element
+  var modal = document.getElementById("forgot-password-modal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("forgot-password");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks the button, open the modal
+  btn.onclick = function () {
+    modal.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+</script>
+{% endblock %}
